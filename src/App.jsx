@@ -1,10 +1,13 @@
 import './App.css'
+import Header from './components/Header'
 
 function App() {
 
   return (
     <>
-      <h1 className='text-3xl text-blue-300'>Welcome</h1>
+       <div className='min-h-screen flex flex-col'>
+        <Header />
+       </div>
     </>
   )
 }
