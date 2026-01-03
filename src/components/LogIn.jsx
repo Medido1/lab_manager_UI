@@ -1,12 +1,49 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { UserContext } from "../context/userContext";
 
 function Login() {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const {setUser} = useContext(UserContext);
+
+  const handleLogin = async(e) => {
+    e.preventDefault();
+
+    try {
+      const res = await fetch("http://localhost:8000/users/login", {
+        method: "post",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({username, password}),
+        credentials: "include"
+      })
+      const data = await res.json();
+
+      if (data.token) {
+        localStorage.setItem('authToken', data.token); // not safe refractor later
+        localStorage.setItem('user', JSON.stringify(data.user));
+        setUser(data.user);
+      }
+      if (!res.ok) {
+        setMessage(data.message || "Error Login in");
+      } else {
+        setMessage('logged In');
+        setUserName("");
+        setPassword("")
+      }
+
+    } catch (error) {
+      console.error(error);
+      setMessage("Something went wrong");
+    }
+  }
+  
   return (
     <div  className="w-full max-w-md flex-grow self-center mt-[10%]">
-      <form className="flex flex-col items-center bg-gray-200 max-h-64 p-4 rounded-2xl w-full">
+      <form 
+        onSubmit={handleLogin}
+        className="flex flex-col items-center bg-gray-200 max-h-64 p-4 rounded-2xl w-full"
+      >
         <h2 className="text-2xl font-bold text-center mb-4">
           Welcome
         </h2>
