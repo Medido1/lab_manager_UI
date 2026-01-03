@@ -36,8 +36,30 @@ export const UserProvider = ({children}) => {
     }; checkAuth()
   }, [])
 
+  const handleLogOut = async() => {
+    try {
+      const res = await fetch('http://localhost:8000/users/logout', {
+        method: "GET",
+        credentials: "include"
+      })
+      const data = await res.json();
+
+      if (!res.ok) {
+        setMessage(data.message || "failed to logout");
+      } else {
+        setMessage("Logged out!");
+        setUser(null);
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('user');
+      }
+    } catch (error) {
+      console.error(error);
+      setMessage("Something went wrong");
+    }
+  };
+
   return(
-    <UserContext.Provider value={{user, setUser}}>
+    <UserContext.Provider value={{user, setUser, handleLogOut}}>
       {children}
     </UserContext.Provider>
   )

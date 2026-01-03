@@ -8,7 +8,7 @@ function Main () {
   }, [])
   return (
     <main>
-      <h1>Hi</h1>
+      <h1>Hi {user.username}</h1>
     </main>
   )
 }
