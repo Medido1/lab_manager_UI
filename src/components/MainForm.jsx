@@ -1,5 +1,11 @@
-function MainForm({state, changeType, setName, setPrice, setPayedSum, handlePrint}) {
-  const {type, fullName, price, payedSum} = state
+import { number } from "framer-motion";
+
+function MainForm({
+  state, changeType, setName, 
+  setPrice, setPayedSum, handlePrint,
+  setNumber
+  }) {
+  const {type, fullName, price, payedSum, number} = state
 
   const buttonStyle = `block mx-auto px-4 py-2 rounded-full mt-4 shadow-lg cursor-pointer
   hover:scale-125 transition delay-100 bg-white`
@@ -15,6 +21,30 @@ function MainForm({state, changeType, setName, setPrice, setPayedSum, handlePrin
     setPayedSum("");
   }
 
+  async function getNextClientNumber(e) {
+    let currentType = e.target.value;
+    changeType(currentType);
+    let latestNumber;
+
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      try {
+      const res = await fetch(`http://localhost:8000/clients/${currentType}`,{
+        headers: { Authorization: `Bearer ${token}` },
+      })
+
+      if (!res.ok) throw new Error(`Failed to fetch ${currentType}`);
+      const data = await res.json();
+      if (data.length === 1) {
+        latestNumber = 1;
+        setNumber(latestNumber);
+      } 
+    } catch (error) {
+      console.error(error)
+    }
+    } 
+  }
+
   return (
     <form 
       className="px-4 py-8 rounded-md sm:w-full md:w-[30%] form" 
@@ -25,7 +55,7 @@ function MainForm({state, changeType, setName, setPrice, setPayedSum, handlePrin
         </label>
         <select 
           value={type}
-          onChange={(e) => changeType(e.target.value)}
+          onChange={(e) => getNextClientNumber(e)}
           name="type" 
           id="type"
           className="rounded-lg bg-white p-2"
@@ -47,6 +77,8 @@ function MainForm({state, changeType, setName, setPrice, setPayedSum, handlePrin
           min="0"
           className={`w-[27%] p-2 rounded-lg border-grey-300 focus:outline-none
           focus:ring-2 focus:ring-blue-400 bg-white`}
+          value={number}
+          onChange={(e) => setNumber(e.target.value)}
         />
       </div>
       <div className="flex gap-4 items-center">

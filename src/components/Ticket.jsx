@@ -1,7 +1,7 @@
 import phoneIcon from '/telephone.png';
 import { forwardRef } from "react";
 
-const Ticket = forwardRef(({type, fullName, price, payedSum}, ref) => {
+const Ticket = forwardRef(({type, fullName, price, payedSum, number}, ref) => {
 
   const currentDay = new Date().toLocaleDateString(`fr-FR`, {
     year: `numeric`,
@@ -36,7 +36,7 @@ const Ticket = forwardRef(({type, fullName, price, payedSum}, ref) => {
           {type}
         </p>
         <p className="text-2xl font-bold">
-          10
+          {number}
         </p>
       </div>
       <p className="text-2xl text-center my-2 font-bold ">

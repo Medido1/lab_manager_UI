@@ -7,10 +7,10 @@ function Main () {
   const {
     state, ticketRef, changeType,
     setName, setPrice, setPayedSum,
-    handlePrint
+    handlePrint, setNumber
     } = useContext(PrintContext);
 
-  const {type, fullName, price, payedSum} = state
+  const {type, fullName, price, payedSum, number} = state
 
   return (
     <main
@@ -26,6 +26,7 @@ function Main () {
           setPrice = {setPrice}
           setPayedSum = {setPayedSum}
           handlePrint = {handlePrint}
+          setNumber = {setNumber}
         />
         <Ticket 
           ref={ticketRef}
@@ -33,6 +34,7 @@ function Main () {
           fullName = {fullName}
           price = {price}
           payedSum = {payedSum}
+          number = {number}
         />
       </section>
     </main>

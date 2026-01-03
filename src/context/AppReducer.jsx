@@ -29,6 +29,11 @@ function AppReducer(state, action) {
         ...state,
         payedSum : action.payload
       }
+    case "SET_NUMBER":
+      return {
+        ...state,
+        number: action.payload
+      }
   }
 }
 

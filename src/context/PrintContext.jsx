@@ -43,8 +43,13 @@ export const PrintProvider = ({children}) => {
       type: "SET_PAYED_SUM", payload: payedSum})
   }
 
+  function setNumber (number) {
+    dispatch({
+      type: "SET_NUMBER", payload: number})
+  }
+
   const value = {state, ticketRef, changeType, setName,
-    setPrice, setPayedSum, handlePrint
+    setPrice, setPayedSum, handlePrint, setNumber
   }
 
   return (
