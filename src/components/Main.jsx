@@ -1,6 +1,7 @@
 import { useContext, useEffect } from "react";
 import { UserContext } from "../context/userContext";
 import MainForm from "./MainForm";
+import Ticket from "./Ticket";
 
 function Main () {
   const {user} = useContext(UserContext);
@@ -15,6 +16,7 @@ function Main () {
         className="flex flex-col sm:flex-row w-full gap-4"
       >
         <MainForm />
+        <Ticket />
       </section>
     </main>
   )
