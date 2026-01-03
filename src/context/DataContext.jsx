@@ -16,7 +16,7 @@ export const DataProvider = ({children}) => {
 
       if (!res.ok) throw new Error(`Failed to fetch ${endpoint}`);
       const data = await res.json();
-      setter(data.tests);
+      setter(data.dataTable);
     } catch (error) {
       console.error(error)
     }
