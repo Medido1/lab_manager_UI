@@ -6,7 +6,8 @@ import { PrintContext } from "../context/PrintContext";
 function Main () {
   const {
     state, ticketRef, changeType,
-    setName, setPrice, setPayedSum
+    setName, setPrice, setPayedSum,
+    handlePrint
     } = useContext(PrintContext);
 
   const {type, fullName, price, payedSum} = state
@@ -24,6 +25,7 @@ function Main () {
           setName = {setName}
           setPrice = {setPrice}
           setPayedSum = {setPayedSum}
+          handlePrint = {handlePrint}
         />
         <Ticket 
           ref={ticketRef}

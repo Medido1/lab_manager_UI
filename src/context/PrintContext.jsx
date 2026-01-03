@@ -44,7 +44,7 @@ export const PrintProvider = ({children}) => {
   }
 
   const value = {state, ticketRef, changeType, setName,
-    setPrice, setPayedSum
+    setPrice, setPayedSum, handlePrint
   }
 
   return (

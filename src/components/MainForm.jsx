@@ -1,8 +1,12 @@
-function MainForm({state, changeType, setName, setPrice, setPayedSum}) {
+function MainForm({state, changeType, setName, setPrice, setPayedSum, handlePrint}) {
   const {type, fullName, price, payedSum} = state
 
   const buttonStyle = `block mx-auto px-4 py-2 rounded-full mt-4 shadow-lg cursor-pointer
   hover:scale-125 transition delay-100 bg-white`
+
+  function isFormValid() {
+    return type && fullName && price 
+  }
 
   return (
     <form 
@@ -91,6 +95,15 @@ function MainForm({state, changeType, setName, setPrice, setPayedSum}) {
         <button
           type="button"
           className={buttonStyle}
+          onClick={() => {
+            if (!isFormValid()) {
+              alert("Veuillez remplir tous les champs obligatoires.");
+              return;
+            } else {
+              handlePrint()
+            }
+          }
+        } 
         >
           Print
         </button>
