@@ -1,6 +1,7 @@
 import phoneIcon from '/telephone.png';
+import { forwardRef } from "react";
 
-function Ticket() {
+const Ticket = forwardRef(({type, fullName, price, payedSum}, ref) => {
 
   const currentDay = new Date().toLocaleDateString(`fr-FR`, {
     year: `numeric`,
@@ -10,6 +11,7 @@ function Ticket() {
 
   return (
     <div 
+      ref={ref}
       className="print-ticket bg-white p-4 py-8 flex 
       flex-col gap-2 items-center rounded-md shadow-md"
     >
@@ -31,21 +33,21 @@ function Ticket() {
           {currentDay}
         </p>
         <p className="text-xl">
-          Anapath
+          {type}
         </p>
         <p className="text-2xl font-bold">
           10
         </p>
       </div>
       <p className="text-2xl text-center my-2 font-bold ">
-          Mehdi Bousalah
+          {fullName}
       </p>
       <div className="self-start flex gap-4">
         <p>
           Prix Total:
         </p>
         <p>
-          2000DA
+          {price}Da
         </p>
       </div>
       <div className="self-start flex gap-4">
@@ -53,7 +55,7 @@ function Ticket() {
           Prix Payée:
         </p>
         <p>
-          2000DA
+          {payedSum}DA
         </p>
       </div>
       <div className="self-start flex items-center gap-4">
@@ -61,7 +63,7 @@ function Ticket() {
           Reste a payer:
         </p>
         <p className="font-bold text-2xl">
-          1000DA
+          {price - payedSum}DA
         </p>
       </div>
       <p className="text-sm text-center">
@@ -69,6 +71,6 @@ function Ticket() {
       </p>
     </div>
   )
-}
+})
 
 export default Ticket;

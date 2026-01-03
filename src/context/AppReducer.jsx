@@ -1,0 +1,35 @@
+import {initialState} from "./PrintContext";
+
+const priceMap = {
+  "Anapath": 2000,
+  "Cytoponction": 1500,
+  "F.C.V": 1000
+}
+
+function AppReducer(state, action) {
+  switch(action.type) {
+    case "CHANGE_TYPE":
+      return {
+        ...state,
+        type: action.payload,
+        price: priceMap[action.payload] || "",
+      };
+    case "SET_NAME":
+      return {
+        ...state,
+        fullName: action.payload
+      }
+    case "SET_PRICE":
+      return {
+        ...state,
+        price : action.payload
+      }
+    case "SET_PAYED_SUM":
+      return {
+        ...state,
+        payedSum : action.payload
+      }
+  }
+}
+
+export default AppReducer;

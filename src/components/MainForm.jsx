@@ -1,6 +1,9 @@
-function MainForm() {
+function MainForm({state, changeType, setName, setPrice, setPayedSum}) {
+  const {type, fullName, price, payedSum} = state
+
   const buttonStyle = `block mx-auto px-4 py-2 rounded-full mt-4 shadow-lg cursor-pointer
-    hover:scale-125 transition delay-100 bg-white`
+  hover:scale-125 transition delay-100 bg-white`
+
   return (
     <form 
       className="px-4 py-8 rounded-md sm:w-full md:w-[30%] form" 
@@ -10,6 +13,8 @@ function MainForm() {
           Analyse
         </label>
         <select 
+          value={type}
+          onChange={(e) => changeType(e.target.value)}
           name="type" 
           id="type"
           className="rounded-lg bg-white p-2"
@@ -38,6 +43,8 @@ function MainForm() {
           Nom :
         </label>
         <input
+          onChange={(e) => setName(e.target.value)}
+          value={fullName}
           type="text" 
           id="fullName" 
           autoComplete="off" 
@@ -54,6 +61,8 @@ function MainForm() {
           id="price"
           name="price"
           className="bg-white p-2 rounded-lg sm:w-[27%]"
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
         >
           <option value="1000">1000</option>
           <option value="1500">1500</option>
@@ -72,6 +81,8 @@ function MainForm() {
           min="0" 
           id="payedSum"
           name="payed"
+          value={payedSum}
+          onChange={(e) => setPayedSum(e.target.value)}
           className="p-2 rounded-lg border-grey-300 focus:outline-none
           focus:ring-2 focus:ring-blue-400 bg-white w-[24%] sm:w-[27%]"
         />
