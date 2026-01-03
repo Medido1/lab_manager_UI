@@ -8,6 +8,13 @@ function MainForm({state, changeType, setName, setPrice, setPayedSum, handlePrin
     return type && fullName && price 
   }
 
+  function cancelInput() {
+    changeType("");
+    setName("");
+    setPrice("");
+    setPayedSum("");
+  }
+
   return (
     <form 
       className="px-4 py-8 rounded-md sm:w-full md:w-[30%] form" 
@@ -115,11 +122,7 @@ function MainForm({state, changeType, setName, setPrice, setPayedSum, handlePrin
         </button>
         <button
           type="button"
-          className={buttonStyle}>
-          Reset
-        </button>
-        <button
-          type="button"
+          onClick={cancelInput}
           className={`mx-auto bg-white px-4 py-2 rounded-full mt-4 shadow-lg cursor-pointer
             hover:scale-125 transition delay-150`}
           >
