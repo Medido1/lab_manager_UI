@@ -56,6 +56,28 @@ function MainForm({
     } 
   }
 
+  function calculateEndDate(type, currentDay = new Date()) {
+    let daysLeft;
+    if (type === "Anapath") {
+      daysLeft = 12;
+    } else if (type === "Cytoponction") {
+      daysLeft = 1;
+    } else if (type === "F.C.V") {
+      daysLeft = 5
+    }
+
+    /* create copy to calculate new date */
+    const endDate = new Date(currentDay)
+    endDate.setDate(endDate.getDate() + daysLeft);
+    const dayOfWeek = endDate.getDay();
+   
+    /* if the resulting day if friday skip to saturday */
+    if (dayOfWeek === 5) {
+      endDate.setDate(endDate.getDate() +1)
+    }
+    return endDate;
+  }
+
   async function addClient() {
     if (!isFormValid()) {
       alert("Veuillez remplir tous les champs obligatoires.");
@@ -63,15 +85,19 @@ function MainForm({
     }
 
     const token = localStorage.getItem('authToken');
+    const endDateObj = calculateEndDate(type);
 
     const newClient = {
       type,
       number,
       fullName,
       price,
-      payedSum,
-      user: user.username
+      payedSum: Number(payedSum),
+      user: user.username,
+      endDate: endDateObj
     }
+
+    console.log(price - payedSum);
 
     try {
       const res = await fetch('http://localhost:8000/clients/add', {
