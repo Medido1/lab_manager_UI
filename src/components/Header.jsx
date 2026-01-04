@@ -21,7 +21,7 @@ function Header(){
         />
         <h1 className='text-2xl font-bold'>My Lab Manager</h1>
       </div>
-      <DataLinks />
+      {user && <DataLinks />}
       {user && 
         <button>
           <img 
