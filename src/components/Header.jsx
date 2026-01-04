@@ -4,6 +4,7 @@ import { InterfaceContext } from '../context/inferfaceContext';
 import { UserContext } from '../context/userContext';
 import { useContext } from 'react';
 import SettingsModal from './SettingsModal';
+import DataLinks from './DataLinks';
 
 function Header(){
   const {showSettings, setShowSettings} = useContext(InterfaceContext);
@@ -20,6 +21,7 @@ function Header(){
         />
         <h1 className='text-2xl font-bold'>My Lab Manager</h1>
       </div>
+      <DataLinks />
       {user && 
         <button>
           <img 
