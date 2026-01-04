@@ -3,10 +3,19 @@ import editIcon from '/edit.png';
 import { checkAsCompleted, deleteClient } from '../api/clientApi';
 import { useContext, useState } from 'react';
 import { DataContext} from '../context/DataContext'
+import EditForm from './EditForm';
 
-function ClientTableMain({data}){
+function ClientTableMain({data, type}){
   const [message, setMessage] = useState("");
-  const {refreshData} = useContext(DataContext)
+  const {refreshData} = useContext(DataContext);
+  const [formData, setFormData] = useState({});
+
+  const [showForm, setShowForm] = useState(false);
+
+  function updateClient(client) {
+    setFormData(client);
+    setShowForm(true);
+  }
 
   return (
     <main  className="bg-gray-200 p-4 flex-grow">
@@ -32,7 +41,7 @@ function ClientTableMain({data}){
                   >
                     <img src={deleteIcon} alt="delete client" className='h-4'/>
                   </button>
-                  <button>
+                  <button onClick={() => updateClient(client)}>
                     <img src={editIcon} alt="edit client" className='h-4' />
                   </button>
                   <p className="order-first sm:order-none">
@@ -68,6 +77,18 @@ function ClientTableMain({data}){
           ))}
         </tbody>
       </table>
+      {showForm && 
+        <div>
+          <div className="fixed inset-0 bg-black/25 z-40"></div>
+          <div className="absolute top-[10%] left-[35%] z-40 p-4 rounded-2xl">
+            <EditForm 
+              type={type}
+              clientData = {formData}
+              setClientData = {setFormData}
+            />
+          </div>
+        </div>
+      }
     </main>
   )
 }

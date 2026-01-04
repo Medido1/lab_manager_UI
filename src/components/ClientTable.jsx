@@ -26,7 +26,7 @@ function ClientTable({type, data}) {
       <ClientTableHeader 
         type={type}
       />
-      <ClientTableMain data={displayData} />
+      <ClientTableMain data={displayData} type={type} />
       <ClientTableFooter 
         currentPage={currentPage} 
         totalPages={totalPages}
