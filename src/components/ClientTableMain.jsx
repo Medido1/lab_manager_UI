@@ -1,7 +1,13 @@
 import deleteIcon from '/delete.png';
 import editIcon from '/edit.png';
+import { checkAsCompleted } from '../api/clientApi';
+import { useContext, useState } from 'react';
+import { DataContext} from '../context/DataContext'
 
 function ClientTableMain({data}){
+  const [message, setMessage] = useState("");
+  const {refreshData} = useContext(DataContext)
+
   return (
     <main  className="bg-gray-200 p-4 flex-grow">
       <table className="min-w-full border-2 bg-white border-blue-400 text-black">
@@ -40,6 +46,7 @@ function ClientTableMain({data}){
                   <input
                     type="checkbox"
                     checked={client.sortie}
+                    onChange={() => checkAsCompleted(client.id, setMessage, refreshData, !client.sortie)}
                   />
                   <span className="checkmark"></span>
                 </label>
