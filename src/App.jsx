@@ -9,6 +9,7 @@ import Main from './components/Main';
 import ProtectedRoute from './components/ProtectedRoute';
 import ClientTable from './components/ClientTable'; 
 import { DataContext } from './context/DataContext';
+import Footer from './components/Footer';
 
 function App() {
   const {user} = useContext(UserContext);
@@ -41,6 +42,7 @@ function App() {
             }/>
           </Routes>
         </Suspense>
+        <Footer />
       </div>
     </Router>
   )

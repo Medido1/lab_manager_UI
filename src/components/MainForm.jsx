@@ -95,8 +95,6 @@ function MainForm({
       endDate: endDateObj
     }
 
-    console.log(price - payedSum);
-
     try {
       const res = await fetch('http://localhost:8000/clients/add', {
         method: "POST",
