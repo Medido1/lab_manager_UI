@@ -20,6 +20,7 @@ function MainForm({
 
   function cancelInput() {
     changeType("");
+    setNumber("");
     setName("");
     setPrice("");
     setPayedSum("");

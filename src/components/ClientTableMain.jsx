@@ -47,7 +47,10 @@ function ClientTableMain({data}){
               <td className="p-2 border text-center">{client.fullName}</td>
               <td className="p-2 border text-center w-[12%]">{client.price}DA</td>
               <td
-                className={`p-2 border text-center w-[12%]`}
+                className={`${
+                    client.remaining == 0 ? "bg-green-400" : "bg-red-400"
+                  }
+                  p-2 border text-center w-[12%]`}
               >
                   {client.remaining}DA
               </td>
