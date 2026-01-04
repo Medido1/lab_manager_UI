@@ -1,7 +1,7 @@
 import deleteIcon from '/delete.png';
 import editIcon from '/edit.png';
 import { checkAsCompleted } from '../api/clientApi';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { DataContext} from '../context/DataContext'
 
 function ClientTableMain({data}){
