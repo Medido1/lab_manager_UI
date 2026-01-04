@@ -16,7 +16,7 @@ function App() {
 
   useEffect(() => {
     console.log(anapathData)
-  }, [])
+  }, [anapathData])
   
   return (
     <Router>

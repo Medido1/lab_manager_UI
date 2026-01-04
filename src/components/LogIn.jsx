@@ -1,11 +1,13 @@
 import { useState, useContext } from "react";
 import { UserContext } from "../context/userContext";
+import { DataContext } from "../context/DataContext";
 
 function Login() {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const {setUser} = useContext(UserContext);
+  const {refreshData} = useContext(DataContext)
 
   const handleLogin = async(e) => {
     e.preventDefault();
@@ -30,6 +32,7 @@ function Login() {
         setMessage('logged In');
         setUserName("");
         setPassword("")
+        refreshData();
       }
 
     } catch (error) {
