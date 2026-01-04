@@ -1,4 +1,5 @@
 import ClientTableHeader from "./ClientTableHeader";
+import ClientTableMain from "./ClientTableMain";
 
 function ClientTable({type, data}) {
   return (
@@ -6,6 +7,7 @@ function ClientTable({type, data}) {
       <ClientTableHeader 
         type={type}
       />
+      <ClientTableMain data={data} />
     </div>
   )
 }

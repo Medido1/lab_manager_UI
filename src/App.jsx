@@ -13,6 +13,10 @@ import { DataContext } from './context/DataContext';
 function App() {
   const {user} = useContext(UserContext);
   const {anapathData, cytoponctionData, fcvData} = useContext(DataContext);
+
+  useEffect(() => {
+    console.log(anapathData)
+  }, [])
   
   return (
     <Router>
