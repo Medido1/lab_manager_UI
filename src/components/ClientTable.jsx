@@ -3,7 +3,7 @@ import ClientTableMain from "./ClientTableMain";
 
 function ClientTable({type, data}) {
   return (
-    <div className="flex-grow">
+    <div className="flex flex-col flex-grow">
       <ClientTableHeader 
         type={type}
       />

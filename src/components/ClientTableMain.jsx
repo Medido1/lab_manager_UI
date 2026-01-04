@@ -3,7 +3,7 @@ import editIcon from '/edit.png';
 
 function ClientTableMain({data}){
   return (
-    <main  className="bg-gray-200 p-4">
+    <main  className="bg-gray-200 p-4 flex-grow">
       <table className="min-w-full border-2 bg-white border-blue-400 text-black">
         <thead className="bg-blue-400">
           <tr>
