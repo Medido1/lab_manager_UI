@@ -1,4 +1,6 @@
-import { number } from "framer-motion";
+import { useContext } from 'react';
+import {UserContext} from '../context/userContext';
+import { DataContext } from '../context/DataContext';
 
 function MainForm({
   state, changeType, setName, 
@@ -6,6 +8,8 @@ function MainForm({
   setNumber
   }) {
   const {type, fullName, price, payedSum, number} = state
+  const {user} = useContext(UserContext);
+  const {refreshData} = useContext(DataContext);
 
   const buttonStyle = `block mx-auto px-4 py-2 rounded-full mt-4 shadow-lg cursor-pointer
   hover:scale-125 transition delay-100 bg-white`
@@ -50,6 +54,41 @@ function MainForm({
       console.error(error)
     }
     } 
+  }
+
+  async function addClient() {
+    if (!isFormValid()) {
+      alert("Veuillez remplir tous les champs obligatoires.");
+      return;
+    }
+
+    const token = localStorage.getItem('authToken');
+
+    const newClient = {
+      type,
+      number,
+      fullName,
+      price,
+      payedSum,
+      user: user.username
+    }
+
+    try {
+      const res = await fetch('http://localhost:8000/clients/add', {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify(newClient)
+      })
+      if (res.ok) {
+        refreshData();
+      }
+      cancelInput();
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (
@@ -156,6 +195,7 @@ function MainForm({
         <button
           type="button"
           className={buttonStyle}
+          onClick={addClient}
         >
           Save
         </button>
