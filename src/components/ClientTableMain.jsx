@@ -1,7 +1,7 @@
 import deleteIcon from '/delete.png';
 import editIcon from '/edit.png';
-import { checkAsCompleted } from '../api/clientApi';
-import { useContext, useEffect, useState } from 'react';
+import { checkAsCompleted, deleteClient } from '../api/clientApi';
+import { useContext, useState } from 'react';
 import { DataContext} from '../context/DataContext'
 
 function ClientTableMain({data}){
@@ -27,7 +27,9 @@ function ClientTableMain({data}){
             <tr key={client.id}>
               <td className="p-2 border text-center">
                 <div className='flex flex-col sm:flex-row gap-4 items-center'>
-                  <button>
+                  <button
+                    onClick={() => deleteClient(client.id, setMessage, refreshData)}
+                  >
                     <img src={deleteIcon} alt="delete client" className='h-4'/>
                   </button>
                   <button>
