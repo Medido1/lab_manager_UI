@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import {UserContext} from '../context/userContext';
 import { DataContext } from '../context/DataContext';
 
@@ -9,7 +9,7 @@ function MainForm({
   }) {
   const {type, fullName, price, payedSum, number} = state
   const {user} = useContext(UserContext);
-  const {refreshData} = useContext(DataContext);
+  const {anapathData, cytoponctionData, fcvData, refreshData} = useContext(DataContext);
 
   const buttonStyle = `block mx-auto px-4 py-2 rounded-full mt-4 shadow-lg cursor-pointer
   hover:scale-125 transition delay-100 bg-white`
@@ -25,35 +25,32 @@ function MainForm({
     setPayedSum("");
   }
 
-  async function getNextClientNumber(e) {
-    let currentType = e.target.value;
+  /* get last entry number and update form number to next entery */
+  function getNextClientNumber(e) {
+    const currentType = e.target.value;
     changeType(currentType);
-   
-    if (currentType === "" ) {
-      setNumber("")
-      return
-    };
     let latestNumber;
 
-    const token = localStorage.getItem('authToken');
-    if (token) {
-      try {
-      const res = await fetch(`http://localhost:8000/clients/${currentType}`,{
-        headers: { Authorization: `Bearer ${token}` },
-      })
-
-      if (!res.ok) throw new Error(`Failed to fetch ${currentType}`);
-      const data = await res.json();
-      if (data.length === 1) {
+    if (currentType === "Anapath") {
+      if (anapathData.length === 0) {
         latestNumber = 0;
       } else {
-        latestNumber = Math.max(...data.map(client => (client.number)))
+        latestNumber = Math.max(...anapathData.map(client => (client.number)))
       }
-      setNumber(latestNumber + 1);
-    } catch (error) {
-      console.error(error)
-    }
-    } 
+    } else if (currentType === "Cytoponction") {
+      if (cytoponctionData.length === 0) {
+        latestNumber = 0;
+      } else {
+        latestNumber = Math.max(...cytoponctionData.map(client => (client.number)))
+      }
+    } else if (currentType === "F.C.V") {
+      if (fcvData.length === 0) {
+        latestNumber = 0
+      } else {
+        latestNumber = Math.max(...fcvData.map(client => client.number))
+      }
+    };
+    setNumber(latestNumber + 1);
   }
 
   function calculateEndDate(type, currentDay = new Date()) {
