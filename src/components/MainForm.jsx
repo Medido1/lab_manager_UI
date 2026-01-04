@@ -36,9 +36,11 @@ function MainForm({
       if (!res.ok) throw new Error(`Failed to fetch ${currentType}`);
       const data = await res.json();
       if (data.length === 1) {
-        latestNumber = 1;
-        setNumber(latestNumber);
-      } 
+        latestNumber = 0;
+      } else {
+        latestNumber = Math.max(...data.map(client => (client.number)))
+      }
+      setNumber(latestNumber + 1);
     } catch (error) {
       console.error(error)
     }
