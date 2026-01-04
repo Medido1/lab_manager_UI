@@ -24,6 +24,11 @@ function MainForm({
   async function getNextClientNumber(e) {
     let currentType = e.target.value;
     changeType(currentType);
+   
+    if (currentType === "" ) {
+      setNumber("")
+      return
+    };
     let latestNumber;
 
     const token = localStorage.getItem('authToken');
