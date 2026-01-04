@@ -13,7 +13,7 @@ function ClientTable({type, data}) {
   // start the display on the last page
   useEffect(() => {
     setCurrentPage(totalPages > 0 ? totalPages : 1);
-  }, [data]); 
+  }, [type]); 
 
   useEffect(() => {
     const indexOfLastItem = currentPage * itemsPerPage;
