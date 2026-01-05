@@ -1,11 +1,14 @@
 import deleteIcon from '/delete.png';
 import editIcon from '/edit.png';
 import { checkAsCompleted, deleteClient } from '../api/clientApi';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { DataContext} from '../context/DataContext'
 import EditForm from './EditForm';
+import Ticket from './Ticket';
+import { PrintContext } from '../context/PrintContext';
 
 function ClientTableMain({data, type}){
+  const {ticketRef} = useContext(PrintContext);
   const [message, setMessage] = useState("");
   const {refreshData} = useContext(DataContext);
   const [formData, setFormData] = useState({});
@@ -85,6 +88,17 @@ function ClientTableMain({data, type}){
               type={type}
               clientData = {formData}
               setClientData = {setFormData}
+              setShowForm = {setShowForm}
+            />
+          </div>
+          <div style={{ position: 'absolute', left: '-9999px', top: 0 }}>
+            <Ticket
+              ref={ticketRef}
+              type = {type}
+              number = {formData.number}
+              fullName = {formData.fullName}
+              price = {formData.price}
+              payedSum = {formData.price - formData.remaining}
             />
           </div>
         </div>

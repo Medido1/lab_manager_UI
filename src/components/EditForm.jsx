@@ -1,11 +1,12 @@
-import { useEffect } from "react";
+import { useContext } from "react";
+import { PrintContext } from "../context/PrintContext";
 
-function EditForm({type, clientData, setClientData}) {
+function EditForm({type, clientData, setClientData, setShowForm}) {
   const {number, fullName, price, remaining, phoneNumber} = clientData;
+  const {handlePrint} = useContext(PrintContext);
 
   const buttonStyle = `block mx-auto px-4 py-2 rounded-full mt-4 shadow-lg cursor-pointer
   hover:scale-125 transition delay-100 bg-white`
-
 
   return (
     <div className="bg-blue-400 flex flex-col w-full rounded-lg p-4 ">
@@ -123,6 +124,10 @@ function EditForm({type, clientData, setClientData}) {
           <button
             type="button"
             className={buttonStyle}
+            onClick={() => {
+              setShowForm(false);
+              handlePrint();
+            }}
           >
             Print
           </button>
