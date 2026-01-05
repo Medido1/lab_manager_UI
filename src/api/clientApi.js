@@ -79,3 +79,31 @@ export const getFullData = async (setMessage) => {
     console.error(error)
   }
 }
+
+export const importData = async (excelData) => {
+  if (!token) {
+    console.error('No auth token found');
+    return null;
+  }
+
+  try {
+    const res = await fetch('http://localhost:8000/clients/import', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(excelData) 
+    })
+
+     const data = await res.json();
+
+    if (!res.ok) {
+      console.error('Failed to save data:', data.message || 'Unknown error');
+      return null;
+    }
+    return data; 
+  } catch (error) {
+    console.error(error)
+  }
+}
