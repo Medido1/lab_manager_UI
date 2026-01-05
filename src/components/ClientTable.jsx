@@ -11,6 +11,12 @@ function ClientTable({type, data}) {
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(data.length / itemsPerPage);
 
+  function displayLastPage() {
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    setDisplayData(data.slice(indexOfFirstItem, indexOfLastItem))
+  }
+
   // start the display on the last page
   useEffect(() => {
     setCurrentPage(totalPages > 0 ? totalPages : 1);
@@ -18,22 +24,22 @@ function ClientTable({type, data}) {
 
   useEffect(() => {
     if (searchTerm.trim() === "") {
-      setCurrentPage(totalPages > 0 ? totalPages : 1);
-      const indexOfLastItem = currentPage * itemsPerPage;
-      const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-      setDisplayData(data.slice(indexOfFirstItem, indexOfLastItem))
+      displayLastPage()
     }
   }, [currentPage, data, searchTerm]);
 
   // search clients
 
   useEffect(() => {
-    if (searchTerm.trim() === "" ) return;
+    if (searchTerm.trim() === "" ) {
+      setCurrentPage(totalPages > 0 ? totalPages : 1);
+      displayLastPage();
+      return ;
+    }
     const searchData = data.filter((client) => 
       client.fullName.toLowerCase().includes(searchTerm.toLocaleLowerCase())
     );
     setDisplayData(searchData)
-    setCurrentPage(1)
   }, [searchTerm]);
 
   return (
