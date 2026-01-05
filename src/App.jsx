@@ -10,6 +10,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import ClientTable from './components/ClientTable'; 
 import { DataContext } from './context/DataContext';
 import Footer from './components/Footer';
+import { Navigate } from 'react-router-dom';
 
 function App() {
   const {user} = useContext(UserContext);
@@ -21,8 +22,14 @@ function App() {
         <Header />
         <Suspense fallback={<div className='text-center text-2xl'>Loading ...</div>}>
           <Routes>
-            <Route path="/" element={
-              user ? <Main /> : <Login />
+            <Route
+              path="/"
+              element={user ? <Navigate to="/main" replace /> : <Login />}
+            />
+            <Route path="/main" element={
+              <ProtectedRoute>
+                <Main />
+              </ProtectedRoute>
             }/>
             <Route path='/anapath' element={
               <ProtectedRoute>
