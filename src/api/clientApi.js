@@ -53,3 +53,29 @@ export const deleteClient = async (id, setMessage, refreshData) => {
     }
   }
 };
+
+export const getFullData = async (setMessage) => {
+  if (!token) {
+    console.error('No auth token found');
+    return null;
+  }
+
+  try {
+    const res = await fetch('http://localhost:8000/clients/all', {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    })
+    const data = await res.json();
+
+    if (!res.ok) {
+      setMessage(data.message || "'Erreur fetching data");
+      return
+    }
+    return data;
+  } catch (error) {
+    console.error(error)
+  }
+}
