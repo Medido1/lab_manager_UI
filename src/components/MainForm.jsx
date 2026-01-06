@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import {UserContext} from '../context/userContext';
 import { DataContext } from '../context/DataContext';
+import { addClientAPI, addMultipleClientsAPI} from '../api/clientApi';
 
 function MainForm({
   state, changeType, setName, 
@@ -114,23 +115,8 @@ function MainForm({
 
       clientList.push(newClient);
     } 
+    addMultipleClientsAPI(clientList, refreshData, cancelInput)
 
-    try {
-      const res = await fetch('http://localhost:8000/clients/add/multi', {
-        method: "POST",
-        headers: { 
-          "Content-Type": "application/json",
-          'Authorization': `Bearer ${token}`,
-        },
-        body: JSON.stringify(clientList)
-      })
-      if (res.ok) {
-        refreshData();
-      }
-      cancelInput();
-    } catch (error) {
-      console.error(error)
-    }
   }
 
   async function addClient() {
@@ -139,7 +125,6 @@ function MainForm({
       return;
     }
 
-    const token = localStorage.getItem('authToken');
     const endDateObj = calculateEndDate(type);
 
     const newClient = {
@@ -151,23 +136,7 @@ function MainForm({
       user: user.username,
       endDate: endDateObj
     }
-
-    try {
-      const res = await fetch('http://localhost:8000/clients/add', {
-        method: "POST",
-        headers: { 
-          "Content-Type": "application/json",
-          'Authorization': `Bearer ${token}`,
-        },
-        body: JSON.stringify(newClient)
-      })
-      if (res.ok) {
-        refreshData();
-      }
-      cancelInput();
-    } catch (error) {
-      console.error(error)
-    }
+    addClientAPI(newClient, refreshData, cancelInput)
   }
 
   return (

@@ -107,3 +107,62 @@ export const importData = async (excelData) => {
     console.error(error)
   }
 }
+
+export const updateClient = async(clientData, refreshData, setShowForm) => {
+  const token = localStorage.getItem('authToken');
+
+  try {
+    const res = await fetch(`http://localhost:8000/clients/${clientData.id}/edit`, {
+      method: "put",
+      headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(clientData)
+    })
+    if (res.ok) {
+      refreshData();
+      setShowForm(false);
+    }
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export const addClientAPI = async(newClient, refreshData, cancelInput) => {
+  try {
+    const res = await fetch('http://localhost:8000/clients/add', {
+      method: "POST",
+      headers: { 
+        "Content-Type": "application/json",
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify(newClient)
+    })
+    if (res.ok) {
+      refreshData();
+    }
+    cancelInput();
+  } catch (error) {
+    console.error(error)
+  }
+};
+
+export const addMultipleClientsAPI = async(clientList, refreshData, cancelInput) => {
+   try {
+    const res = await fetch('http://localhost:8000/clients/add/multi', {
+      method: "POST",
+      headers: { 
+        "Content-Type": "application/json",
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify(clientList)
+    })
+    if (res.ok) {
+      refreshData();
+    }
+    cancelInput();
+  } catch (error) {
+    console.error(error)
+  }
+}
