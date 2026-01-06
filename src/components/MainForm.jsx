@@ -91,6 +91,48 @@ function MainForm({
     return endDate;
   }
 
+  async function addMultipleClients() {
+    if (!isFormValid() || numberOfTests < 1 ) {
+      alert("Veuillez remplir tous les champs obligatoires.");
+      return;
+    }
+  
+    const token = localStorage.getItem('authToken');
+    const endDateObj = calculateEndDate(type);
+    let clientList = []
+
+    for (let i = 0; i < numberOfTests; i++) {
+      const newClient = {
+        type,
+        number: number + i,
+        fullName,
+        price: totalPrice,
+        payedSum: Number(payedSum),
+        user: user.username,
+        endDate: endDateObj
+      }
+
+      clientList.push(newClient);
+    } 
+
+    try {
+      const res = await fetch('http://localhost:8000/clients/add/multi', {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify(clientList)
+      })
+      if (res.ok) {
+        refreshData();
+      }
+      cancelInput();
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   async function addClient() {
     if (!isFormValid()) {
       alert("Veuillez remplir tous les champs obligatoires.");
@@ -271,7 +313,7 @@ function MainForm({
         <button
           type="button"
           className={buttonStyle}
-          onClick={addClient}
+          onClick={isMultiple ? addMultipleClients : addClient}
         >
           Save
         </button>
