@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useState } from "react";
 import MainForm from "./MainForm";
 import Ticket from "./Ticket";
 import { PrintContext } from "../context/PrintContext";
@@ -11,6 +11,11 @@ function Main () {
     } = useContext(PrintContext);
 
   const {type, fullName, price, payedSum, number} = state
+
+  // handle multiple entries
+  const [isMultiple, setIsMultiple] = useState(false);
+  const [numberOfTests, setNumberOfTests] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   return (
     <main
@@ -27,6 +32,12 @@ function Main () {
           setPayedSum = {setPayedSum}
           handlePrint = {handlePrint}
           setNumber = {setNumber}
+          isMultiple = {isMultiple}
+          setIsMultiple = {setIsMultiple}
+          numberOfTests = {numberOfTests}
+          setNumberOfTests = {setNumberOfTests}
+          totalPrice = {totalPrice}
+          setTotalPrice = {setTotalPrice}
         />
         <Ticket 
           ref={ticketRef}
@@ -35,6 +46,9 @@ function Main () {
           price = {price}
           payedSum = {payedSum}
           number = {number}
+          isMultiple = {isMultiple}
+          numberOfTests = {numberOfTests}
+          totalPrice = {totalPrice}
         />
       </section>
     </main>

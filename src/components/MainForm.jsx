@@ -1,15 +1,30 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import {UserContext} from '../context/userContext';
 import { DataContext } from '../context/DataContext';
 
 function MainForm({
   state, changeType, setName, 
   setPrice, setPayedSum, handlePrint,
-  setNumber
+  setNumber, isMultiple, setIsMultiple,
+  numberOfTests, setNumberOfTests, totalPrice,
+  setTotalPrice
   }) {
   const {type, fullName, price, payedSum, number} = state
   const {user} = useContext(UserContext);
   const {anapathData, cytoponctionData, fcvData, refreshData} = useContext(DataContext);
+
+  // handle multiple entries
+  const [lastNumber, setLastNumber] = useState(0);
+
+  useEffect(() => {
+    setLastNumber((parseInt(number) + parseInt(numberOfTests)) - 1)
+  },[numberOfTests])
+
+  useEffect(() => {
+    if (numberOfTests !== 0) {
+      setTotalPrice(parseInt(numberOfTests) * 800) /* edge case for this lab  */
+    }
+  }, [numberOfTests])
 
   const buttonStyle = `block mx-auto px-4 py-2 rounded-full mt-4 shadow-lg cursor-pointer
   hover:scale-125 transition delay-100 bg-white`
@@ -134,6 +149,19 @@ function MainForm({
           <option value="F.C.V">FCV</option>
         </select>
       </div>
+      {isMultiple &&  
+        <div className="flex gap-4 mb-4">
+          <label htmlFor="numberOfTests" className="w-[40%] sm:w-[27%] font-bold">
+            Nombre des tests:
+          </label>
+          <input 
+            className={`w-[27%] p-2 rounded border-grey-300 focus:outline-none
+            focus:ring-2 focus:ring-blue-400 bg-white`}
+            type="number" name="numberOfTests" id="numberOfTests" 
+            min="0" value={numberOfTests} onChange={(e) => setNumberOfTests(e.target.value)}
+          />
+        </div>
+      }
       <div className="flex gap-4 items-center mb-4">
         <label htmlFor="number" className="w-[40%] sm:w-[27%] font-bold">
           Numero :
@@ -149,6 +177,21 @@ function MainForm({
           onChange={(e) => setNumber(e.target.value)}
         />
       </div>
+      {isMultiple && 
+        <div className="flex gap-4 items-center mb-4">
+          <label htmlFor="lastNumber" className="w-[40%] sm:w-[27%] font-bold">
+            A :
+          </label>
+        <input 
+          className={`w-[27%] p-2 rounded border-grey-300 focus:outline-none
+          focus:ring-2 focus:ring-blue-400 bg-black bg-white`}
+          type="lastNumber" 
+          id="lastNumber"
+          value={lastNumber ? lastNumber : ""} min="0"
+          readOnly
+        />
+        </div>
+      }
       <div className="flex gap-4 items-center">
         <label htmlFor="fullName" className="w-[40%] sm:w-[27%] font-bold">
           Nom :
@@ -168,20 +211,31 @@ function MainForm({
         <label htmlFor="price" className="w-[40%] sm:w-[27%] font-bold">
           Prix Total :
         </label>
-        <select  
-          id="price"
-          name="price"
-          className="bg-white p-2 rounded-lg sm:w-[27%]"
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-        >
-          <option value="1000">1000</option>
-          <option value="1500">1500</option>
-          <option value="2000">2000</option>
-          <option value="3000">3000</option>
-          <option value="2500">2500</option>
-          <option value="4000">4000</option>
-        </select>
+        {!isMultiple && 
+          <select  
+            onChange = {(e) => setPrice(e.target.value)}
+            id="price"
+            className={`bg-white p-2 rounded-lg sm:w-[27%]`}
+            value={price}
+          >
+            <option value="1000">1000</option>
+            <option value="1500">1500</option>
+            <option value="2000">2000</option>
+            <option value="2500">2500</option>
+            <option value="4000">4000</option>
+          </select>
+        }
+        {isMultiple &&  
+          <div>
+            <input 
+              className={`p-2 rounded border-grey-300 focus:outline-none
+              focus:ring-2 focus:ring-blue-400 bg-white w-[27%]`}
+              readOnly
+              name="totalPrice" id="totalPrice" 
+              value={totalPrice}
+             />
+          </div>
+        }
       </div>
       <div className="flex gap-4 items-center mt-4">
         <label htmlFor="payedSum" className="w-[40%] sm:w-[27%] font-bold">
@@ -228,6 +282,14 @@ function MainForm({
             hover:scale-125 transition delay-150`}
           >
           Cancel
+        </button>
+        <button
+          type="button"
+          onClick={() => setIsMultiple(!isMultiple)}
+          className={`mx-auto bg-white px-4 py-2 rounded-full mt-4 shadow-lg cursor-pointer
+            hover:scale-125 transition delay-150`}
+          >
+          Multiple
         </button>
       </div>
     </form>

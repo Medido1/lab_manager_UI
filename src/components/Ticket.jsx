@@ -1,7 +1,10 @@
 import phoneIcon from '/telephone.png';
 import { forwardRef } from "react";
+import arrowIcon from '/right-arrow.png';
 
-const Ticket = forwardRef(({type, fullName, price, payedSum, number}, ref) => {
+const Ticket = forwardRef(({
+  type, fullName, price, payedSum,
+  number, isMultiple, numberOfTests, totalPrice}, ref) => {
 
   const currentDay = new Date().toLocaleDateString(`fr-FR`, {
     year: `numeric`,
@@ -32,22 +35,36 @@ const Ticket = forwardRef(({type, fullName, price, payedSum, number}, ref) => {
         <p className="text-lg">
           {currentDay}
         </p>
-        <p className="text-xl">
-          {type}
-        </p>
-        <p className="text-2xl font-bold">
+        {!isMultiple &&
+          <p className="text-xl">
+            {type}
+          </p>
+        }
+        {!isMultiple && 
+          <p className="text-lg font-bold">
           {number}
-        </p>
+          </p>
+        }
+        {isMultiple &&
+          <p>{numberOfTests} {type}</p>
+        }
       </div>
       <p className="text-2xl text-center my-2 font-bold ">
-          {fullName}
+        {fullName}
       </p>
+      {isMultiple && number && numberOfTests > 0 &&
+        <p className="text-2xl flex items-center gap-2">
+          {number} 
+          <img src={arrowIcon} alt="icon" className='h-4' />
+          {(parseInt(number) + parseInt(numberOfTests)) - 1}
+        </p>
+      }
       <div className="self-start flex gap-4">
         <p>
           Prix Total:
         </p>
         <p>
-          {price}Da
+           {isMultiple ? totalPrice ? totalPrice: "" : price}DA
         </p>
       </div>
       <div className="self-start flex gap-4">
@@ -63,7 +80,7 @@ const Ticket = forwardRef(({type, fullName, price, payedSum, number}, ref) => {
           Reste a payer:
         </p>
         <p className="font-bold text-2xl">
-          {price - payedSum}DA
+          {isMultiple ? totalPrice ? (totalPrice - payedSum): "" : price - payedSum}DA
         </p>
       </div>
       <p className="text-sm text-center">
