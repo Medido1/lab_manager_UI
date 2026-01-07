@@ -16,7 +16,7 @@ export const UserProvider = ({children}) => {
       if (token) {
         try {
           // Send the token in the Authorization header
-          const res = await fetch("http://localhost:8000/users/profile", {
+          const res = await fetch("https://192.168.1.11:8000/users/profile", {
             method: "get",
             headers: {"Authorization": `Bearer ${token}`}
           })
