@@ -38,7 +38,7 @@ export const UserProvider = ({children}) => {
 
   const handleLogOut = async() => {
     try {
-      const res = await fetch('http://localhost:8000/users/logout', {
+      const res = await fetch('https://192.168.1.11:8000/users/logout', {
         method: "GET",
         credentials: "include"
       })
