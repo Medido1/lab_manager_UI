@@ -9,6 +9,7 @@ export const UserProvider = ({children}) => {
   });
 
   const [message, setMessage] = useState("");
+  const API_BASE_URL = "https://colours-symptoms-mileage-accounting.trycloudflare.com/";
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -16,7 +17,7 @@ export const UserProvider = ({children}) => {
       if (token) {
         try {
           // Send the token in the Authorization header
-          const res = await fetch("https://192.168.1.11:8000/users/profile", {
+          const res = await fetch(`${API_BASE_URL}/users/profile`, {
             method: "get",
             headers: {"Authorization": `Bearer ${token}`}
           })
@@ -38,7 +39,7 @@ export const UserProvider = ({children}) => {
 
   const handleLogOut = async() => {
     try {
-      const res = await fetch('https://192.168.1.11:8000/users/logout', {
+      const res = await fetch(`${API_BASE_URL}/users/logout`, {
         method: "GET",
         credentials: "include"
       })
