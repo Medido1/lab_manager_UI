@@ -6,7 +6,7 @@ export const checkAsCompleted = async (id, setMessage, refreshData, checked) => 
     return
   }
   try {
-    const res = await fetch(`http://localhost:8000/clients/${id}/update`, {
+    const res = await fetch(`https://192.168.1.11:8000/clients/${id}/update`, {
       method: "PATCH",
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -31,7 +31,7 @@ export const deleteClient = async (id, setMessage, refreshData) => {
 
   if (window.confirm("Êtes-vous sûr de vouloir supprimer cet enregistrement ?")) {
     try {
-      const res = await fetch(`http://localhost:8000/clients/${id}/delete`, {
+      const res = await fetch(`https://192.168.1.11:8000/clients/${id}/delete`, {
         method: "DELETE",
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -61,7 +61,7 @@ export const getFullData = async (setMessage) => {
   }
 
   try {
-    const res = await fetch('http://localhost:8000/clients/all', {
+    const res = await fetch('https://192.168.1.11:8000/clients/all', {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -87,7 +87,7 @@ export const importData = async (excelData) => {
   }
 
   try {
-    const res = await fetch('http://localhost:8000/clients/import', {
+    const res = await fetch('https://192.168.1.11:8000/clients/import', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -112,7 +112,7 @@ export const updateClient = async(clientData, refreshData, setShowForm) => {
   const token = localStorage.getItem('authToken');
 
   try {
-    const res = await fetch(`http://localhost:8000/clients/${clientData.id}/edit`, {
+    const res = await fetch(`https://192.168.1.11:8000/clients/${clientData.id}/edit`, {
       method: "put",
       headers: {
       'Authorization': `Bearer ${token}`,
@@ -150,7 +150,7 @@ export const addClientAPI = async(newClient, refreshData, cancelInput) => {
 
 export const addMultipleClientsAPI = async(clientList, refreshData, cancelInput) => {
    try {
-    const res = await fetch('http://localhost:8000/clients/add/multi', {
+    const res = await fetch('https://192.168.1.11:8000/clients/add/multi', {
       method: "POST",
       headers: { 
         "Content-Type": "application/json",
