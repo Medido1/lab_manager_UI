@@ -8,9 +8,11 @@ export const DataProvider = ({children}) => {
   const [fcvData, setFCVData] = useState([]);
   const [refresh, setRefresh] = useState(0); // trigger for refetch
 
+  const API_BASE_URL = "https://colours-symptoms-mileage-accounting.trycloudflare.com";
+
   const fetchData = async (endpoint,token, setter) => {
     try {
-      const res = await fetch(`https://192.168.1.11:8000/clients/${endpoint}`,{
+      const res = await fetch(`${API_BASE_URL}/clients/${endpoint}`,{
         headers: { Authorization: `Bearer ${token}` },
       })
 
