@@ -9,7 +9,7 @@ export const UserProvider = ({children}) => {
   });
 
   const [message, setMessage] = useState("");
-  const API_BASE_URL = "https://colours-symptoms-mileage-accounting.trycloudflare.com/";
+  const API_BASE_URL = "https://colours-symptoms-mileage-accounting.trycloudflare.com";
 
   useEffect(() => {
     const checkAuth = async () => {
