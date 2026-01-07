@@ -10,7 +10,7 @@ export const DataProvider = ({children}) => {
 
   const fetchData = async (endpoint,token, setter) => {
     try {
-      const res = await fetch(`http://localhost:8000/clients/${endpoint}`,{
+      const res = await fetch(`https://192.168.1.11:8000/clients/${endpoint}`,{
         headers: { Authorization: `Bearer ${token}` },
       })
 
