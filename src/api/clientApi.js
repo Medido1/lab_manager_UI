@@ -1,6 +1,6 @@
 const token = localStorage.getItem('authToken');
 
-const API_BASE_URL = "http://192.168.1.11:8000";
+const API_BASE_URL = "https://backend.mylabmanager.pp.ua";
 
 export const checkAsCompleted = async (id, setMessage, refreshData, checked) => {
   if (!token) {

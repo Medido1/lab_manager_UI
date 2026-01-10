@@ -8,7 +8,7 @@ export const DataProvider = ({children}) => {
   const [fcvData, setFCVData] = useState([]);
   const [refresh, setRefresh] = useState(0); // trigger for refetch
 
-  const API_BASE_URL = "https://colours-symptoms-mileage-accounting.trycloudflare.com";
+  const API_BASE_URL = "https://backend.mylabmanager.pp.ua";
 
   const fetchData = async (endpoint,token, setter) => {
     try {
