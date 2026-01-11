@@ -9,7 +9,7 @@ function Login() {
   const {setUser} = useContext(UserContext);
   const {refreshData} = useContext(DataContext)
 
-  const API_BASE_URL = "https://backend.mylabmanager.pp.ua";
+  const API_BASE_URL = "https://192.168.1.9:8000"
   
   const handleLogin = async(e) => {
     e.preventDefault();
