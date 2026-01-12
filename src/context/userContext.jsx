@@ -9,7 +9,7 @@ export const UserProvider = ({children}) => {
   });
 
   const [message, setMessage] = useState("");
-  const API_BASE_URL = "https://192.168.1.9:8000";
+  const API_BASE_URL = "https://192.168.56.1:8000";
 
   useEffect(() => {
     const checkAuth = async () => {
