@@ -1,10 +1,9 @@
-const token = localStorage.getItem('authToken');
-
-  const API_BASE_URL = window.location.hostname === 'localhost' 
+const API_BASE_URL = window.location.hostname === 'localhost' 
   ? "http://localhost:8000"
   : "https://192.168.56.1:8000"
 
 export const checkAsCompleted = async (id, setMessage, refreshData, checked) => {
+  const token = localStorage.getItem('authToken');
   if (!token) {
     console.error('No auth token found');
     return
@@ -28,6 +27,7 @@ export const checkAsCompleted = async (id, setMessage, refreshData, checked) => 
 }
 
 export const deleteClient = async (id, setMessage, refreshData) => {
+  const token = localStorage.getItem('authToken');
   if (!token) {
     console.error('No auth token found');
     return;
@@ -59,6 +59,7 @@ export const deleteClient = async (id, setMessage, refreshData) => {
 };
 
 export const getFullData = async (setMessage) => {
+  const token = localStorage.getItem('authToken');
   if (!token) {
     console.error('No auth token found');
     return null;
@@ -85,6 +86,7 @@ export const getFullData = async (setMessage) => {
 }
 
 export const importData = async (excelData) => {
+  const token = localStorage.getItem('authToken');
   if (!token) {
     console.error('No auth token found');
     return null;
@@ -134,6 +136,7 @@ export const updateClient = async(clientData, refreshData, setShowForm) => {
 }
 
 export const addClientAPI = async(newClient, refreshData, cancelInput) => {
+  const token = localStorage.getItem('authToken');
   try {
     const res = await fetch(`${API_BASE_URL}/clients/add`, {
       method: "POST",
@@ -153,7 +156,8 @@ export const addClientAPI = async(newClient, refreshData, cancelInput) => {
 };
 
 export const addMultipleClientsAPI = async(clientList, refreshData, cancelInput) => {
-   try {
+  const token = localStorage.getItem('authToken');
+  try {
     const res = await fetch(`${API_BASE_URL}/clients/add/multi`, {
       method: "POST",
       headers: { 
