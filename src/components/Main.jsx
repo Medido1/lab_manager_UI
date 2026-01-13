@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import MainForm from "./MainForm";
 import Ticket from "./Ticket";
 import { PrintContext } from "../context/PrintContext";
+import TodaysResults from "./TodaysResults";
 
 function Main () {
   const {
@@ -50,6 +51,7 @@ function Main () {
           numberOfTests = {numberOfTests}
           totalPrice = {totalPrice}
         />
+        <TodaysResults />
       </section>
     </main>
   )
