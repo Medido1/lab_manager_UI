@@ -6,13 +6,19 @@ import { motion, AnimatePresence } from "framer-motion";
 
 function SettingsModal() {
   const {showSettings, setShowSettings} = useContext(InterfaceContext);
-  const {handleLogOut} = useContext(UserContext);
+  const {setUser} = useContext(UserContext);
 
   const modalAnimation = {
     initial: {y:-100},
     animate: {y: 0},
     transition: { duration: 0.6, ease: "easeOut" },
     exit: {opacity: 0, transition: { duration: 0.6, ease: "easeInOut" }},
+  }
+
+  const handleLogOut = () => {
+    localStorage.removeItem("authToken");
+    setUser(null);
+    setShowSettings(false)
   }
 
   return (
@@ -25,10 +31,7 @@ function SettingsModal() {
           <div className="flex gap-2">
             <img src={logoutIcon} alt="logout" className="h-6" />
             <button 
-            onClick={() => {
-              handleLogOut()
-              setShowSettings(false)
-            }}
+            onClick={handleLogOut}
             className='hover:border-b-2 cursor-pointer font-bold'>
               Log out
             </button>

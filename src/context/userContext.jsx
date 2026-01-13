@@ -39,30 +39,8 @@ export const UserProvider = ({children}) => {
     }; checkAuth()
   }, [])
 
-  const handleLogOut = async() => {
-    try {
-      const res = await fetch(`${API_BASE_URL}/users/logout`, {
-        method: "GET",
-        credentials: "include"
-      })
-      const data = await res.json();
-
-      if (!res.ok) {
-        setMessage(data.message || "failed to logout");
-      } else {
-        setMessage("Logged out!");
-        setUser(null);
-        localStorage.removeItem('authToken');
-        localStorage.removeItem('user');
-      }
-    } catch (error) {
-      console.error(error);
-      setMessage("Something went wrong");
-    }
-  };
-
   return(
-    <UserContext.Provider value={{user, setUser, handleLogOut}}>
+    <UserContext.Provider value={{user, setUser}}>
       {children}
     </UserContext.Provider>
   )
