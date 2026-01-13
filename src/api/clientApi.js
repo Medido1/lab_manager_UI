@@ -1,6 +1,6 @@
 const token = localStorage.getItem('authToken');
 
-const API_BASE_URL = "https://192.168.56.1:8000"
+const API_BASE_URL = "https://192.168.1.5:8000"
 
 export const checkAsCompleted = async (id, setMessage, refreshData, checked) => {
   if (!token) {
