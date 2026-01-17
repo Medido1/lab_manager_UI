@@ -1,8 +1,8 @@
 import deleteIcon from '/delete.png';
 import editIcon from '/edit.png';
 import uploadIcon from '/file.png';
-import { checkAsCompleted, deleteClient } from '../api/clientApi';
-import { useContext, useEffect, useState } from 'react';
+import { checkAsCompleted, deleteClient, uploadFile } from '../api/clientApi';
+import { useContext, useState } from 'react';
 import { DataContext} from '../context/DataContext'
 import EditForm from './EditForm';
 import Ticket from './Ticket';
@@ -19,6 +19,13 @@ function ClientTableMain({data, type}){
   function updateClient(client) {
     setFormData(client);
     setShowForm(true);
+  }
+
+  function handleFileUpload(e) {
+    const selectedFile = e.target.files[0];
+    if (!selectedFile) return;
+
+    uploadFile(selectedFile, refreshData);
   }
 
   return (
@@ -61,6 +68,7 @@ function ClientTableMain({data, type}){
                     id='client_file'
                     name='client_file'
                     accept=".pdf,.doc,.docx"
+                    onChange={handleFileUpload}
                   />
                   <p className="order-first sm:order-none">
                     {client.createdAt.split("T")[0]}
