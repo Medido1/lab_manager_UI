@@ -175,13 +175,13 @@ export const addMultipleClientsAPI = async(clientList, refreshData, cancelInput)
   }
 }
 
-export const uploadFile = async(file, refreshData) => {
+export const uploadFile = async(file, refreshData, id) => {
    const token = localStorage.getItem('authToken');
    try {
     const formData = new FormData();
     formData.append('client_file', file);
 
-    const res= await fetch(`${API_BASE_URL}/clients/upload`, {
+    const res= await fetch(`${API_BASE_URL}/clients/${id}/upload`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`,

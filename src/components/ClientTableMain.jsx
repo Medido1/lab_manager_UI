@@ -23,10 +23,9 @@ function ClientTableMain({data, type}){
 
   function handleFileUpload(e, id) {
     const selectedFile = e.target.files[0];
-    console.log(id);
     if (!selectedFile) return;
 
-    uploadFile(selectedFile, refreshData);
+    uploadFile(selectedFile, refreshData, id);
   }
 
   return (
