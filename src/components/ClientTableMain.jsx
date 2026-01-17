@@ -21,8 +21,9 @@ function ClientTableMain({data, type}){
     setShowForm(true);
   }
 
-  function handleFileUpload(e) {
+  function handleFileUpload(e, id) {
     const selectedFile = e.target.files[0];
+    console.log(id);
     if (!selectedFile) return;
 
     uploadFile(selectedFile, refreshData);
@@ -68,7 +69,7 @@ function ClientTableMain({data, type}){
                     id='client_file'
                     name='client_file'
                     accept=".pdf,.doc,.docx"
-                    onChange={handleFileUpload}
+                    onChange={(e) => handleFileUpload(e, client.id)}
                   />
                   <p className="order-first sm:order-none">
                     {client.createdAt.split("T")[0]}
