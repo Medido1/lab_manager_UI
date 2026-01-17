@@ -1,5 +1,6 @@
 import deleteIcon from '/delete.png';
 import editIcon from '/edit.png';
+import uploadIcon from '/file.png';
 import { checkAsCompleted, deleteClient } from '../api/clientApi';
 import { useContext, useEffect, useState } from 'react';
 import { DataContext} from '../context/DataContext'
@@ -47,9 +48,24 @@ function ClientTableMain({data, type}){
                   <button onClick={() => updateClient(client)}>
                     <img src={editIcon} alt="edit client" className='h-4' />
                   </button>
+                  <label htmlFor="client_file" className='cursor-pointer'>
+                    <img 
+                      src={uploadIcon} 
+                      alt="upload file" 
+                      className='w-[100%] block h-4'
+                    />
+                  </label>
+                  <input 
+                    type="file" 
+                    className='hidden' 
+                    id='client_file'
+                    name='client_file'
+                    accept=".pdf,.doc,.docx"
+                  />
                   <p className="order-first sm:order-none">
                     {client.createdAt.split("T")[0]}
                   </p>
+                  
                 </div>
               </td>
               <td className="p-2 border text-center text-sm sm:w-[7%] sm:text-md">
