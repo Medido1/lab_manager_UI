@@ -8,6 +8,8 @@ function SettingsModal() {
   const {showSettings, setShowSettings} = useContext(InterfaceContext);
   const {setUser} = useContext(UserContext);
 
+  const token = localStorage.getItem('authToken');
+
   const modalAnimation = {
     initial: {y:-100},
     animate: {y: 0},
@@ -21,6 +23,18 @@ function SettingsModal() {
     setShowSettings(false)
   }
 
+  const isTokenExpired = () => {
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]))
+      return payload.exp * 1000 < Date.now();
+    } catch (error) {
+      true
+    }
+  }
+
+  if (isTokenExpired(token)) {
+    handleLogOut();
+  }
   return (
     <AnimatePresence>
       {showSettings &&
