@@ -21,11 +21,16 @@ function ClientTableMain({data, type}){
     setShowForm(true);
   }
 
-  function handleFileUpload(e, id) {
+  async function handleFileUpload(e, id) {
     const selectedFile = e.target.files[0];
     if (!selectedFile) return;
 
-    uploadFile(selectedFile, refreshData, id);
+    try {
+      await uploadFile(selectedFile, refreshData, id);
+    } catch (error) {
+      console.error('Upload failed:', error);
+      alert('Failed to upload file. Please try again.');
+    }
   }
 
   return (
@@ -55,7 +60,7 @@ function ClientTableMain({data, type}){
                   <button onClick={() => updateClient(client)}>
                     <img src={editIcon} alt="edit client" className='h-4' />
                   </button>
-                  <label htmlFor="client_file" className='cursor-pointer'>
+                  <label htmlFor={`client_file_${client.id}`} className='cursor-pointer'>
                     <img 
                       src={uploadIcon} 
                       alt="upload file" 
@@ -65,7 +70,7 @@ function ClientTableMain({data, type}){
                   <input 
                     type="file" 
                     className='hidden' 
-                    id='client_file'
+                      id={`client_file_${client.id}`}  // ← Unique ID per client
                     name='client_file'
                     accept=".pdf,.doc,.docx"
                     onChange={(e) => handleFileUpload(e, client.id)}

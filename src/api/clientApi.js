@@ -176,22 +176,25 @@ export const addMultipleClientsAPI = async(clientList, refreshData, cancelInput)
 }
 
 export const uploadFile = async(file, refreshData, id) => {
-   const token = localStorage.getItem('authToken');
-   try {
-    const formData = new FormData();
-    formData.append('client_file', file);
+  if (!file) throw new Error('No file provided');
 
-    const res= await fetch(`${API_BASE_URL}/clients/${id}/upload`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-      },
-      body: formData
-    })
-    if (res.ok) {
-      refreshData();
-    }
-   } catch (error) {
-      console.error(error)
-   }
+  const token = localStorage.getItem('authToken');
+  
+  const formData = new FormData();
+  formData.append('file', file);
+
+  const res = await fetch(`${API_BASE_URL}/clients/${id}/upload`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+    },
+    body: formData
+  });
+
+  if (!res.ok) {
+    const error = await res.text();
+    throw new Error(`Upload failed: ${error || res.statusText}`);
+  }
+
+  refreshData();
 }
