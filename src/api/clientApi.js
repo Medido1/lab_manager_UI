@@ -198,3 +198,29 @@ export const uploadFile = async(file, refreshData, id) => {
 
   refreshData();
 }
+
+export const viewClientFile = async (id) => {
+  const token = localStorage.getItem('authToken');
+  try {
+    const res = await fetch(`${API_BASE_URL}/clients/${id}/file`, {
+      method: "GET",
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+
+    if (!res.ok) {
+      throw new Error('File not found');
+    }
+
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+    window.open(url);
+    
+    // Clean up the blob URL after a delay
+    setTimeout(() => URL.revokeObjectURL(url), 100);
+  } catch (error) {
+    console.error('Failed to open file:', error);
+    alert('Failed to open file. Please try again.');
+  }
+}

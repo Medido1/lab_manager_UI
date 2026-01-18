@@ -1,12 +1,13 @@
 import deleteIcon from '/delete.png';
 import editIcon from '/edit.png';
 import uploadIcon from '/file.png';
-import { checkAsCompleted, deleteClient, uploadFile } from '../api/clientApi';
+import { checkAsCompleted, deleteClient, uploadFile, viewClientFile } from '../api/clientApi';
 import { useContext, useState } from 'react';
 import { DataContext} from '../context/DataContext'
 import EditForm from './EditForm';
 import Ticket from './Ticket';
 import { PrintContext } from '../context/PrintContext';
+import viewIcon from '/view.png'
 
 function ClientTableMain({data, type}){
   const {ticketRef} = useContext(PrintContext);
@@ -33,6 +34,15 @@ function ClientTableMain({data, type}){
     }
   }
 
+  function handleFileView(file, id) {
+    if (!file) {
+      alert("no file found")
+      return;
+    }
+
+    viewClientFile(id);
+  }
+
   return (
     <main  className="bg-gray-200 p-4 flex-grow">
       <table className="min-w-full border-2 bg-white border-blue-400 text-black">
@@ -45,6 +55,7 @@ function ClientTableMain({data, type}){
             <th>Prix Total</th>
             <th>Reste a payé</th>
             <th>Telephone</th>
+            <th>PDF</th>
           </tr>
         </thead>
         <tbody>
@@ -78,7 +89,6 @@ function ClientTableMain({data, type}){
                   <p className="order-first sm:order-none">
                     {client.createdAt.split("T")[0]}
                   </p>
-                  
                 </div>
               </td>
               <td className="p-2 border text-center text-sm sm:w-[7%] sm:text-md">
@@ -105,6 +115,13 @@ function ClientTableMain({data, type}){
                   {client.remaining}DA
               </td>
               <td className="p-2 border">{client.phoneNumber}</td>
+              <td className={`p-2 border text-center ${client.file ? 'bg-green-200' : 'bg-grey-100'}`}>
+                <img 
+                  src={viewIcon} alt="view file"
+                  onClick={() => handleFileView(client.file, client.id)}
+                  className={`h-4 cursor-pointer`}
+                />
+              </td>
             </tr>
           ))}
         </tbody>

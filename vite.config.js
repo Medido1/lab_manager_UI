@@ -13,7 +13,8 @@ export default defineConfig({
       ['delete.png', 'edit.png',
         'folder.png', 'logout.png',
         'microscope.png', 'righ-arrow.png',
-        'settings.png', 'telephone.png'
+        'settings.png', 'telephone.png',
+        'file.png','view.png'
       ],
       manifest: {
         name: "My lab manager",
