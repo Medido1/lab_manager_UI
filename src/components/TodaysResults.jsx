@@ -1,37 +1,54 @@
-import {useContext, useMemo } from "react";
+import {useContext, useEffect, useMemo } from "react";
 import { DataContext } from "../context/DataContext";
 
 function TodaysResults() {
-  const { anapathData, cytoponctionData,fcvData} = useContext(DataContext)
+  const { anapathData, cytoponctionData,fcvData} = useContext(DataContext);
 
-  const currentDay = useMemo(() => 
-    new Date().toLocaleDateString("fr-FR", {
-      year: "numeric", month: "long", day: "numeric"
-    }), []);
+  function isSameDay(a, b) {
+    const dateA = new Date(a);
+    const dateB = new Date(b);
 
-  const anapathToday = anapathData.filter(
-    item => item.type === "Anapath" && item.endDate === currentDay && !item.sortie
-  ); 
-  const CytoponctionToday = cytoponctionData.filter(
-    item => item.type === "Cytoponction" && item.endDate === currentDay && !item.sortie
-  );
-  const FCVToday = fcvData.filter(
-    item => item.type === "F.C.V" && item.endDate === currentDay && !item.sortie
-  );
-    
+    return (
+      dateA.getFullYear() === dateB.getFullYear() &&
+      dateA.getMonth() === dateB.getMonth() &&
+      dateA.getDate() === dateB.getDate()
+    );
+  }
+
+  const today = new Date(); // current day
+
+  const getTodayItems = (data, type) =>
+  data.filter(item => item.type === type && !item.sortie && isSameDay(item.endDate, today));
+
+  const anapathToday = getTodayItems(anapathData, "Anapath");
+  const cytoponctionToday = getTodayItems(cytoponctionData, "Cytoponction");
+  const FCVToday = getTodayItems(fcvData, "F.C.V");
+
+  const todayDisplay = today.toLocaleDateString("fr-FR", {
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  });
+
+  useEffect(() => {
+    console.log(anapathData[anapathData.length - 1])
+  }, [anapathData])
+
   return (
     <div className={`bg-blue-200 results px-4 py-2 sm:flex-grow rounded-lg`}>
       <h1 className="text-2xl text-center font-bold">
-        Résultats {currentDay}
+        Résultats {todayDisplay}
       </h1>
       <h2 className="text-lg sm:text-xl font-bold border-b-2
        border-black w-[30%] sm:w-[20%]">
         Anapath :
       </h2>
       <ul className="ml-2">
-        {anapathToday && anapathToday.map(item => 
+        {anapathToday.map(item => 
           <li key={item.id}>
-            <p>{item.number} {item.name}</p>
+            <p className="font-bold text-lg">
+              {item.number}-{item.fullName}
+            </p>
           </li>
         )}
       </ul>
@@ -40,7 +57,7 @@ function TodaysResults() {
         Cytoponction :
       </h2>
       <ul className="ml-2">
-        {CytoponctionToday && CytoponctionToday.map(item => 
+        {cytoponctionToday.map(item => 
           <li key={item.id}>
             <p>{item.number} {item.name}</p>
           </li>
@@ -51,7 +68,7 @@ function TodaysResults() {
         FCV :
       </h2>
       <ul className="ml-2">
-        {FCVToday && FCVToday.map(item => 
+        {FCVToday.map(item => 
           <li key={item.id}>
             <p>{item.number} {item.name}</p>
           </li>
