@@ -30,10 +30,6 @@ function TodaysResults() {
     year: "numeric"
   });
 
-  useEffect(() => {
-    console.log(anapathData[anapathData.length - 1])
-  }, [anapathData])
-
   return (
     <div className={`bg-blue-200 results px-4 py-2 sm:flex-grow rounded-lg`}>
       <h1 className="text-2xl text-center font-bold">
