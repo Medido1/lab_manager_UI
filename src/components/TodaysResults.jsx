@@ -55,7 +55,9 @@ function TodaysResults() {
       <ul className="ml-2">
         {cytoponctionToday.map(item => 
           <li key={item.id}>
-            <p>{item.number} {item.name}</p>
+            <p className="font-bold text-lg">
+              {item.number}-{item.fullName}
+            </p>
           </li>
         )}
       </ul>
@@ -66,7 +68,9 @@ function TodaysResults() {
       <ul className="ml-2">
         {FCVToday.map(item => 
           <li key={item.id}>
-            <p>{item.number} {item.name}</p>
+            <p className="font-bold text-lg">
+              {item.number}-{item.fullName}
+            </p>
           </li>
         )}
       </ul>
