@@ -43,6 +43,10 @@ function ClientTableMain({data, type}){
     viewClientFile(id);
   }
 
+  function handleCheck(client) {
+    checkAsCompleted(client.id, setMessage, !client.sortie, refreshData);
+  }
+
   return (
     <main  className="bg-gray-200 p-4 flex-grow">
       <table className="min-w-full border-2 bg-white border-blue-400 text-black">
@@ -99,7 +103,7 @@ function ClientTableMain({data, type}){
                   <input
                     type="checkbox"
                     checked={client.sortie}
-                    onChange={() => checkAsCompleted(client.id, setMessage, !client.sortie, refreshData)}
+                    onChange={() => handleCheck(client)}
                   />
                   <span className="checkmark"></span>
                 </label>

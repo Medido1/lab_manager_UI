@@ -20,7 +20,7 @@ function ClientTable({type, data}) {
   // start the display on the last page
   useEffect(() => {
     setCurrentPage(totalPages > 0 ? totalPages : 1);
-  }, [type, data]); 
+  }, [type]); 
 
   useEffect(() => {
     if (searchTerm.trim() === "") {
@@ -49,7 +49,10 @@ function ClientTable({type, data}) {
         searchTerm = {searchTerm}
         setSearchTerm = {setSearchTerm}
       />
-      <ClientTableMain data={displayData} type={type} />
+      <ClientTableMain 
+        data={displayData}
+        type={type}
+      />
       <ClientTableFooter 
         currentPage={currentPage} 
         totalPages={totalPages}
