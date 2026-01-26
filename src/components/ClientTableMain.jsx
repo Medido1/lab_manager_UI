@@ -99,7 +99,7 @@ function ClientTableMain({data, type}){
                   <input
                     type="checkbox"
                     checked={client.sortie}
-                    onChange={() => checkAsCompleted(client.id, setMessage, !client.sortie)}
+                    onChange={() => checkAsCompleted(client.id, setMessage, !client.sortie, refreshData)}
                   />
                   <span className="checkmark"></span>
                 </label>

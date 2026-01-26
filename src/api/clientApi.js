@@ -2,7 +2,7 @@ const API_BASE_URL = window.location.hostname === 'localhost'
   ? "http://localhost:8000"
   : "https://192.168.56.1:8000"
 
-export const checkAsCompleted = async (id, setMessage, checked) => {
+export const checkAsCompleted = async (id, setMessage, checked, refreshData) => {
   const token = localStorage.getItem('authToken');
   if (!token) {
     console.error('No auth token found');
@@ -20,6 +20,7 @@ export const checkAsCompleted = async (id, setMessage, checked) => {
 
     const data = await res.json();
     setMessage(data.message)
+    refreshData()
   } catch (error) {
     console.error(error);
   }
