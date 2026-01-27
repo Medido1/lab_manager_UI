@@ -5,23 +5,29 @@ import { UserContext } from '../context/userContext';
 import { useContext } from 'react';
 import SettingsModal from './SettingsModal';
 import DataLinks from './DataLinks';
+import ToggleDark from './toggleDark';
 
 function Header(){
-  const {showSettings, setShowSettings} = useContext(InterfaceContext);
+  const {showSettings, setShowSettings, darkMode} = useContext(InterfaceContext);
   const {user} = useContext(UserContext);
 
   return (
     <header 
-      className="header p-4 flex justify-between relative"
+      className={`${darkMode ? 'header_dark' : 'header'} p-4 flex justify-between relative`}
     >
       <div className='flex items-center'>
-        <img 
-          src={labIcon} alt="lab Icon"
-          className='h-10'
-        />
-        <h1 className='text-2xl font-bold'>My Lab Manager</h1>
+        <div className={`${darkMode ? 'p-2 rounded-lg bg-slate-400' : ''}`}>
+          <img
+            src={labIcon} alt="lab Icon"
+            className='h-10'
+          />
+        </div>
+        <h1 className={`${darkMode ? 'text-white': 'text-black'} text-2xl font-bold`}>
+          My Lab Manager
+        </h1>
       </div>
       {user && <DataLinks />}
+      {user && <ToggleDark />}
       {user && 
         <button>
           <img 
