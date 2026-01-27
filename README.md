@@ -1,4 +1,4 @@
-n# Office ticket generator
+# Lab_manager_frontend
 ## Table of contents
 
 - [Overview](#overview)
