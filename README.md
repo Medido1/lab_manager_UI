@@ -22,10 +22,10 @@ The result is a clean, responsive, and robust system for modern client data mana
 ### Screenshot
 
   ## Home Page and ticket generator
-  ![]()
+  ![](./src/assets/main.png)
 
   ## DateBase
-  ![]()
+  ![](./src/assets/db.png)
 
 ### Links
 
@@ -39,6 +39,7 @@ The result is a clean, responsive, and robust system for modern client data mana
 - TailwindCSS
 - React
 - Flexbox
+- CSS
 
 ## Author
 
