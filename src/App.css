@@ -13,6 +13,11 @@
   background: linear-gradient(to bottom right, #bfdbfe, #60a5fa, #2563eb);
 }
 
+.form_dark,
+.results_dark {
+  background: linear-gradient(to top right, #03081f, #0f172a, #26418c);
+}
+
 /* check box */
 /* From Uiverse.io by KhaledMatalkah */ 
 .custom-checkbox {

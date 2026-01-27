@@ -3,12 +3,15 @@ import { saveAs } from "file-saver";
 import {getFullData, importData} from '../api/clientApi'
 import {  useContext, useState } from "react";
 import { DataContext } from "../context/DataContext";
+import { InterfaceContext } from "../context/inferfaceContext";
 
 function ClientTableFooter({currentPage, totalPages, setCurrentPage}) {
   const [fullData, setFullData] = useState([]);
   const [message, setMessage] = useState("");
   const [importedData, setImportedData] = useState([]);
-  const {refreshData} = useContext(DataContext)
+
+  const {refreshData} = useContext(DataContext);
+  const {darkMode} = useContext(InterfaceContext);
 
   const exportToExcel = (data, filename = "data.xlsx") => {
     // 1. Convert data (array of objects) to a worksheet
@@ -63,7 +66,7 @@ function ClientTableFooter({currentPage, totalPages, setCurrentPage}) {
   };
 
   return (
-    <footer className="bg-gray-200 flex justify-center p-2 relative">
+    <footer className={`${darkMode ? 'bg-gray-400' : 'bg-gray-200'} flex justify-center p-2 relative`}>
       <button 
         disabled={currentPage === 1}
         className="px-4 py-2 bg-blue-300 rounded hover:bg-blue-400 disabled:opacity-50

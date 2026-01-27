@@ -8,13 +8,15 @@ import EditForm from './EditForm';
 import Ticket from './Ticket';
 import { PrintContext } from '../context/PrintContext';
 import viewIcon from '/view.png'
+import { InterfaceContext } from "../context/inferfaceContext";
 
 function ClientTableMain({data, type}){
   const {ticketRef} = useContext(PrintContext);
-  const [message, setMessage] = useState("");
   const {refreshData} = useContext(DataContext);
-  const [formData, setFormData] = useState({});
+  const {darkMode} = useContext(InterfaceContext);
 
+  const [message, setMessage] = useState("");
+  const [formData, setFormData] = useState({});
   const [showForm, setShowForm] = useState(false);
 
   function updateClient(client) {
@@ -48,8 +50,8 @@ function ClientTableMain({data, type}){
   }
 
   return (
-    <main  className="bg-gray-200 p-4 flex-grow">
-      <table className="min-w-full border-2 bg-white border-blue-400 text-black">
+    <main  className={`${darkMode ? 'bg-gray-400' : 'bg-gray-200'} p-4 flex-grow`}>
+      <table className={`${darkMode ? 'bg-teal-950 text-white': 'bg-white text-black'} min-w-full border-2 border-blue-400`}>
         <thead className="bg-blue-400">
           <tr>
             <th>Date</th>

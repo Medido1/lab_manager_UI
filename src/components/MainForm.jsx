@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import {UserContext} from '../context/userContext';
 import { DataContext } from '../context/DataContext';
+import { InterfaceContext} from '../context/inferfaceContext';
 import { addClientAPI, addMultipleClientsAPI} from '../api/clientApi';
 
 function MainForm({
@@ -13,6 +14,7 @@ function MainForm({
   const {type, fullName, price, payedSum, number} = state
   const {user} = useContext(UserContext);
   const {anapathData, cytoponctionData, fcvData, refreshData} = useContext(DataContext);
+  const {darkMode} = useContext(InterfaceContext);
 
   // handle multiple entries
   const [lastNumber, setLastNumber] = useState(0);
@@ -28,7 +30,7 @@ function MainForm({
   }, [numberOfTests])
 
   const buttonStyle = `block mx-auto px-4 py-2 rounded-full mt-4 shadow-lg cursor-pointer
-  hover:scale-125 transition delay-100 bg-white`
+  hover:scale-125 transition delay-100 ${darkMode ? 'bg-gray-700' : 'bg-white'}`
 
   function isFormValid() {
     return type && fullName && price 
@@ -139,9 +141,11 @@ function MainForm({
     addClientAPI(newClient, refreshData, cancelInput)
   }
 
+  const inputBg = `${darkMode ? 'bg-black': 'bg-white'}`
+
   return (
     <form 
-      className="px-4 py-8 rounded-md sm:w-full md:w-[30%] form" 
+      className={`${darkMode ? 'form_dark text-white': 'form'} px-4 py-8 rounded-md sm:w-full md:w-[30%]`} 
     >
       <div className="flex items-center gap-4 mb-4">
         <label htmlFor="type" className="w-[40%] sm:w-[27%] font-bold">
@@ -152,7 +156,7 @@ function MainForm({
           onChange={(e) => getNextClientNumber(e)}
           name="type" 
           id="type"
-          className="rounded-lg bg-white p-2"
+          className={`rounded-lg p-2 ${inputBg}`}
         >
           <option value="">select</option>
           <option value="Anapath">Anapath</option>
@@ -167,7 +171,7 @@ function MainForm({
           </label>
           <input 
             className={`w-[27%] p-2 rounded border-grey-300 focus:outline-none
-            focus:ring-2 focus:ring-blue-400 bg-white`}
+            focus:ring-2 focus:ring-blue-400 ${inputBg}`}
             type="number" name="numberOfTests" id="numberOfTests" 
             min="0" value={numberOfTests} onChange={(e) => setNumberOfTests(e.target.value)}
           />
@@ -183,7 +187,7 @@ function MainForm({
           name="number"
           min="0"
           className={`w-[27%] p-2 rounded-lg border-grey-300 focus:outline-none
-          focus:ring-2 focus:ring-blue-400 bg-white`}
+          focus:ring-2 focus:ring-blue-400 ${inputBg}`}
           value={number}
           onChange={(e) => setNumber(e.target.value)}
         />
@@ -195,7 +199,7 @@ function MainForm({
           </label>
         <input 
           className={`w-[27%] p-2 rounded border-grey-300 focus:outline-none
-          focus:ring-2 focus:ring-blue-400 bg-black bg-white`}
+          focus:ring-2 focus:ring-blue-400 bg-black ${inputBg}`}
           type="lastNumber" 
           id="lastNumber"
           value={lastNumber ? lastNumber : ""} min="0"
@@ -214,8 +218,8 @@ function MainForm({
           id="fullName" 
           autoComplete="off" 
           name="fullName"
-          className={`w-[50%] sm:w-[40%]  p-2 rounded-lg border-grey-300 focus:outline-none
-          focus:ring-2 focus:ring-blue-400  bg-white`}
+          className={`w-[50%] sm:w-[40%] p-2 rounded-lg border-grey-300 focus:outline-none
+          focus:ring-2 focus:ring-blue-400 ${inputBg}`}
         />
       </div>
       <div className="flex gap-4  items-center mt-4">
@@ -226,7 +230,7 @@ function MainForm({
           <select  
             onChange = {(e) => setPrice(e.target.value)}
             id="price"
-            className={`bg-white p-2 rounded-lg sm:w-[27%]`}
+            className={`p-2 rounded-lg sm:w-[27%] ${inputBg}`}
             value={price}
           >
             <option value="1000">1000</option>
@@ -240,7 +244,7 @@ function MainForm({
           <div>
             <input 
               className={`p-2 rounded border-grey-300 focus:outline-none
-              focus:ring-2 focus:ring-blue-400 bg-white w-[27%]`}
+              focus:ring-2 focus:ring-blue-400 w-[27%] ${inputBg}`}
               readOnly
               name="totalPrice" id="totalPrice" 
               value={totalPrice}
@@ -259,8 +263,8 @@ function MainForm({
           name="payed"
           value={payedSum}
           onChange={(e) => setPayedSum(e.target.value)}
-          className="p-2 rounded-lg border-grey-300 focus:outline-none
-          focus:ring-2 focus:ring-blue-400 bg-white w-[24%] sm:w-[27%]"
+          className={`p-2 rounded-lg border-grey-300 focus:outline-none
+          focus:ring-2 focus:ring-blue-400 w-[24%] sm:w-[27%] ${inputBg}`}
         />
       </div>
       <div className="flex justify-between mt-4">
@@ -289,16 +293,16 @@ function MainForm({
         <button
           type="button"
           onClick={cancelInput}
-          className={`mx-auto bg-white px-4 py-2 rounded-full mt-4 shadow-lg cursor-pointer
-            hover:scale-125 transition delay-150`}
+          className={`mx-auto px-4 py-2 rounded-full mt-4 shadow-lg cursor-pointer
+            hover:scale-125 transition delay-150 ${darkMode ? 'bg-gray-700' : 'bg-white'}`}
           >
           Cancel
         </button>
         <button
           type="button"
           onClick={() => setIsMultiple(!isMultiple)}
-          className={`mx-auto bg-white px-4 py-2 rounded-full mt-4 shadow-lg cursor-pointer
-            hover:scale-125 transition delay-150`}
+          className={`mx-auto px-4 py-2 rounded-full mt-4 shadow-lg cursor-pointer
+            hover:scale-125 transition delay-150 ${darkMode ? 'bg-gray-700' : 'bg-white'}`}
           >
           Multiple
         </button>

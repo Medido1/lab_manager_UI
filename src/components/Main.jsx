@@ -3,13 +3,16 @@ import MainForm from "./MainForm";
 import Ticket from "./Ticket";
 import { PrintContext } from "../context/PrintContext";
 import TodaysResults from "./TodaysResults";
+import { InterfaceContext } from "../context/inferfaceContext";
 
 function Main () {
   const {
     state, ticketRef, changeType,
     setName, setPrice, setPayedSum,
     handlePrint, setNumber
-    } = useContext(PrintContext);
+  } = useContext(PrintContext);
+
+  const {darkMode} = useContext(InterfaceContext)
 
   const {type, fullName, price, payedSum, number} = state
 
@@ -20,7 +23,7 @@ function Main () {
 
   return (
     <main
-     className="p-4 flex-grow flex-col md:flex-row md:justify-center bg-gray-200"
+     className={`p-4 flex-grow flex-col md:flex-row md:justify-center ${darkMode ? 'bg-gray-400' : 'bg-gray-200'}`}
     >
       <section
         className="flex flex-col sm:flex-row w-full gap-4"
